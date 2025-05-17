@@ -1,0 +1,5 @@
+repositories:
+  bringup/vehicle/vehicle_bringup:
+    type: git
+    url: git@github.com:iblnkn/lerobot.git
+    version: main
