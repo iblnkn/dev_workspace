@@ -1,40 +1,50 @@
-// See https://aka.ms/vscode-remote/devcontainer.json for format details.
 {
-	"name": "vlam-dev",
-	"dockerFile": "Dockerfile",
-	"build": {
-		"args": {
-			"WORKSPACE": "${containerWorkspaceFolder}"
-		}
-	},
-	"remoteUser": "vlam",
-	"runArgs": [
-		"--gpus=all",
-		"--network=host",
-		"--cap-add=SYS_PTRACE",
-		"--security-opt=seccomp:unconfined",
-		"--security-opt=apparmor:unconfined",
-		"--ipc=host"
-		// uncomment to use intel iGPU
-		// "--device=/dev/dri"
-	],
-	"containerEnv": {
-		"XDG_RUNTIME_DIR": "${localEnv:XDG_RUNTIME_DIR}",
-		"PULSE_SERVER": "${localEnv:PULSE_SERVER}"	},
-	// Set *default* container specific settings.json values on container create.
-	"customizations": {
-		"vscode": {
-			"extensions": [
-				"DotJoshJohnson.xml",
-				"ms-azuretools.vscode-docker",
-				"ms-python.python",
-				"ms-vscode.cpptools",
-				"redhat.vscode-yaml",
-				"streetsidesoftware.code-spell-checker",
-				"twxs.cmake",
-				"yzhang.markdown-all-in-one",
-				"zachflower.uncrustify"
-			]
-		}
-	}
+  "name": "lerobot-dev",
+  "dockerFile": "Dockerfile",
+  "context": "..",
+  "workspaceFolder": "/workspace",          // now opens at workspace root
+
+  "build": {
+    "args": {
+      "USER_UID": "${localEnv:UID}",
+      "USER_GID": "${localEnv:GID}",
+      "WORKSPACE": "${containerWorkspaceFolder}"
+    }
+  },
+
+  "remoteUser": "vscode",
+
+  "runArgs": [
+    "--gpus=all",
+    "--network=host",
+    "--ipc=host",
+    "--security-opt=seccomp:unconfined",
+    "--security-opt=apparmor:unconfined",
+    "--cap-add=SYS_PTRACE"
+  ],
+
+  "containerEnv": {
+    "XDG_RUNTIME_DIR": "${localEnv:XDG_RUNTIME_DIR}",
+    "PULSE_SERVER":   "${localEnv:PULSE_SERVER}"
+  },
+
+  "postCreateCommand": "bash -lc \"pip install -e 'lerobot[test,docs]' && pre-commit install || true\"",
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-azuretools.vscode-docker",
+        "ms-vscode.cpptools",
+        "redhat.vscode-yaml",
+        "streetsidesoftware.code-spell-checker",
+        "DotJoshJohnson.xml",
+        "twxs.cmake",
+        "yzhang.markdown-all-in-one",
+        "zachflower.uncrustify",
+        "eamodio.gitlens",
+        "usernamehw.errorlens"
+      ]
+    }
+  }
 }
