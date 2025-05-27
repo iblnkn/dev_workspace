@@ -4,11 +4,11 @@ FROM iblnk/vlam:latest
 USER root
 
 # Create vlam user if it doesn't exist and set up permissions
-RUN if ! id -u vlam > /dev/null 2>&1; then \
-    useradd -m -s /bin/bash vlam && \
-    echo "vlam ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
-    chown -R vlam:vlam /home/vlam; \
-    fi
+# RUN if ! id -u vlam > /dev/null 2>&1; then \
+#     useradd -m -s /bin/bash vlam && \
+#     echo "vlam ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
+#     chown -R vlam:vlam /home/vlam; \
+#     fi
 
 # Keep container running as root
 USER root
